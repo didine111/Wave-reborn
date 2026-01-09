@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Reborn - Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f0f11;
+            color: #e4e4e7;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #71717a;
+            font-size: 14px;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            color: #e4e4e7;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: #3f3f46;
+            transform: translateX(-2px);
+        }
+
+        .settings-section {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .settings-section h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #3b82f6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #71717a;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            border-radius: 8px;
+            color: #e4e4e7;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: #3f3f46;
+        }
+
+        .form-group input[type="number"] {
+            max-width: 150px;
+        }
+
+        .form-group .hint {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #71717a;
+        }
+
+        .channels-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .channel-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #27272a;
+            border-radius: 6px;
+        }
+
+        .channel-item input {
+            flex: 1;
+        }
+
+        .channel-item button {
+            background: #dc2626;
+            border: 1px solid #dc2626;
+            color: #fafafa;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .channel-item button:hover {
+            background: #b91c1c;
+            border-color: #b91c1c;
+        }
+
+        .add-channel-btn {
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            color: #3b82f6;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .add-channel-btn:hover {
+            background: #3f3f46;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: #fafafa;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: #27272a;
+            color: #e4e4e7;
+            border: 1px solid #3f3f46;
+        }
+
+        .btn-secondary:hover {
+            background: #3f3f46;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: #fafafa;
+            border: 1px solid #dc2626;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+            border-color: #b91c1c;
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .status-message.success {
+            background: #18181b;
+            border: 1px solid #22c55e;
+            color: #22c55e;
+        }
+
+        .status-message.error {
+            background: #18181b;
+            border: 1px solid #dc2626;
+            color: #ef4444;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .device-info {
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #71717a;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #71717a;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #27272a;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: #71717a;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">
+        ← Back to Mixer
+    </a>
+
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ Settings</h1>
+            <p>Configure Wave Reborn audio and network settings</p>
+        </div>
+
+        <div id="status-message" class="status-message"></div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            Loading settings...
+        </div>
+
+        <div id="settings-content" style="display: none;">
+            <!-- Audio Settings -->
+            <div class="settings-section">
+                <h2>🎧 Audio Configuration</h2>
+
+                <div class="form-group">
+                    <label for="output-device">Output Device (Headphones/Monitors)</label>
+                    <select id="output-device">
+                        <option value="">Loading devices...</option>
+                    </select>
+                    <div class="hint">Select the audio device for local monitoring</div>
+                    <div id="device-info" class="device-info" style="display: none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="latency">Audio Latency (milliseconds)</label>
+                    <input type="number" id="latency" min="10" max="100" step="1">
+                    <div class="hint">Lower = less delay but more CPU. Recommended: 20ms</div>
+                </div>
+            </div>
+
+            <!-- Channel Settings -->
+            <div class="settings-section">
+                <h2>📻 Channel Configuration</h2>
+
+                <div class="form-group">
+                    <label>Channels (minimum 2)</label>
+                    <div id="channels-list" class="channels-list">
+                        <!-- Channels will be added here dynamically -->
+                    </div>
+                    <button class="add-channel-btn" onclick="addChannel()">+ Add Channel</button>
+                    <div class="hint">⚠️ Changing channels requires restarting the audio system</div>
+                </div>
+            </div>
+
+            <!-- Network Settings -->
+            <div class="settings-section">
+                <h2>🌐 Network Configuration</h2>
+
+                <div class="form-group">
+                    <label for="backend-host">Backend Host</label>
+                    <input type="text" id="backend-host" placeholder="127.0.0.1">
+                    <div class="hint">Use 0.0.0.0 to allow network access (no authentication!)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="backend-port">Backend Port</label>
+                    <input type="number" id="backend-port" min="1024" max="65535">
+                    <div class="hint">Port for API server (default: 8000)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="frontend-port">Frontend Port</label>
+                    <input type="number" id="frontend-port" min="1024" max="65535">
+                    <div class="hint">Port for frontend server (default: 8080). Only used with start.py</div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="loadSettings()">Reset Changes</button>
+                <button class="btn btn-danger" onclick="resetToDefaults()">Reset to Defaults</button>
+                <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            Made by <a href="https://github.com/Lukuoris" target="_blank" rel="noopener noreferrer">Lukuoris</a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.port === '8080' ? 'http://127.0.0.1:8000' : '';
+        let currentConfig = {};
+        let availableDevices = [];
+
+        async function loadAvailableDevices() {
+            try {
+                const res = await fetch(`${API_BASE}/config/devices`);
+                const data = await res.json();
+                availableDevices = data.devices || [];
+
+                const select = document.getElementById('output-device');
+                select.innerHTML = availableDevices.map(device =>
+                    `<option value="${device.name}">${device.description || device.name}</option>`
+                ).join('');
+
+                // Set current device
+                if (currentConfig.audio && currentConfig.audio.output_device) {
+                    select.value = currentConfig.audio.output_device;
+                }
+            } catch (error) {
+                console.error('Error loading devices:', error);
+                document.getElementById('output-device').innerHTML =
+                    '<option value="">Error loading devices</option>';
+            }
+        }
+
+        async function loadSettings() {
+            try {
+                const res = await fetch(`${API_BASE}/config`);
+                currentConfig = await res.json();
+
+                // Populate form
+                document.getElementById('latency').value = currentConfig.audio?.latency_ms || 20;
+                document.getElementById('backend-host').value = currentConfig.network?.backend_host || '127.0.0.1';
+                document.getElementById('backend-port').value = currentConfig.network?.backend_port || 8000;
+                document.getElementById('frontend-port').value = currentConfig.network?.frontend_port || 8080;
+
+                // Load channels
+                renderChannels(currentConfig.audio?.channels || ['Music', 'Game', 'Voice', 'System']);
+
+                // Load devices
+                await loadAvailableDevices();
+
+                // Show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('settings-content').style.display = 'block';
+
+            } catch (error) {
+                console.error('Error loading settings:', error);
+                showStatus('Error loading settings. Please check backend connection.', 'error');
+            }
+        }
+
+        function renderChannels(channels) {
+            const container = document.getElementById('channels-list');
+            container.innerHTML = channels.map((ch, index) => `
+                <div class="channel-item">
+                    <input type="text" value="${ch}"
+                           onchange="updateChannel(${index}, this.value)"
+                           placeholder="Channel name">
+                    ${channels.length > 2 ?
+                        `<button onclick="removeChannel(${index})">Remove</button>` :
+                        '<button disabled style="opacity: 0.3;">Remove</button>'}
+                </div>
+            `).join('');
+        }
+
+        function updateChannel(index, value) {
+            if (!currentConfig.audio) currentConfig.audio = {};
+            if (!currentConfig.audio.channels) currentConfig.audio.channels = [];
+            currentConfig.audio.channels[index] = value.trim();
+        }
+
+        function removeChannel(index) {
+            if (!currentConfig.audio || !currentConfig.audio.channels) return;
+            if (currentConfig.audio.channels.length <= 2) {
+                showStatus('Must have at least 2 channels', 'error');
+                return;
+            }
+            currentConfig.audio.channels.splice(index, 1);
+            renderChannels(currentConfig.audio.channels);
+        }
+
+        function addChannel() {
+            if (!currentConfig.audio) currentConfig.audio = {};
+            if (!currentConfig.audio.channels) currentConfig.audio.channels = [];
+
+            const newName = `Channel${currentConfig.audio.channels.length + 1}`;
+            currentConfig.audio.channels.push(newName);
+            renderChannels(currentConfig.audio.channels);
+        }
+
+        async function saveSettings() {
+            try {
+                // Gather form data
+                const config = {
+                    audio: {
+                        output_device: document.getElementById('output-device').value,
+                        channels: currentConfig.audio?.channels || [],
+                        latency_ms: parseInt(document.getElementById('latency').value)
+                    },
+                    network: {
+                        backend_host: document.getElementById('backend-host').value,
+                        backend_port: parseInt(document.getElementById('backend-port').value),
+                        frontend_port: parseInt(document.getElementById('frontend-port').value)
+                    }
+                };
+
+                // Validate
+                if (config.audio.channels.length < 2) {
+                    showStatus('Must have at least 2 channels', 'error');
+                    return;
+                }
+
+                if (config.audio.latency_ms < 10 || config.audio.latency_ms > 100) {
+                    showStatus('Latency must be between 10 and 100 ms', 'error');
+                    return;
+                }
+
+                // Save
+                const res = await fetch(`${API_BASE}/config`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+
+                if (res.ok) {
+                    showStatus('✅ Settings saved successfully! Restart the application to apply changes.', 'success');
+                    currentConfig = config;
+                } else {
+                    showStatus('Error saving settings', 'error');
+                }
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                showStatus('Error saving settings: ' + error.message, 'error');
+            }
+        }
+
+        async function resetToDefaults() {
+            if (!confirm('Reset all settings to defaults? This cannot be undone.')) {
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/config/reset`, {
+                    method: 'POST'
+                });
+
+                if (res.ok) {
+                    showStatus('✅ Settings reset to defaults. Reloading...', 'success');
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showStatus('Error resetting settings', 'error');
+                }
+            } catch (error) {
+                console.error('Error resetting settings:', error);
+                showStatus('Error resetting settings: ' + error.message, 'error');
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.className = `status-message ${type}`;
+            statusEl.style.display = 'block';
+
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 5000);
+        }
+
+        // Show device info when device changes
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+
+            const deviceSelect = document.getElementById('output-device');
+            deviceSelect.addEventListener('change', () => {
+                const selected = availableDevices.find(d => d.name === deviceSelect.value);
+                const infoEl = document.getElementById('device-info');
+                if (selected && selected.description) {
+                    infoEl.textContent = `Device: ${selected.description}`;
+                    infoEl.style.display = 'block';
+                } else {
+                    infoEl.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

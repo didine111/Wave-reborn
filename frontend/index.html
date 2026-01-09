@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Reborn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0f0f11;
+            color: #e4e4e7;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: #18181b;
+            border-bottom: 1px solid #27272a;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fafafa;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .settings-btn {
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            color: #e4e4e7;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .settings-btn:hover {
+            background: #3f3f46;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .mixer-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #71717a;
+            margin-bottom: 16px;
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 16px;
+            max-width: 1200px;
+        }
+
+        .apps-section {
+            margin-top: 32px;
+        }
+
+        .apps-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 800px;
+        }
+
+        .app-item {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s;
+        }
+
+        .app-item:hover {
+            border-color: #3f3f46;
+        }
+
+        .app-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3f3f46 0%, #27272a 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .app-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .app-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fafafa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .app-details {
+            font-size: 12px;
+            color: #71717a;
+            margin-top: 2px;
+        }
+
+        .app-route-select {
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            color: #e4e4e7;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 120px;
+        }
+
+        .app-route-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .app-route-select:hover {
+            background: #3f3f46;
+        }
+
+        .refresh-apps-btn {
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            color: #e4e4e7;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .refresh-apps-btn:hover {
+            background: #3f3f46;
+        }
+
+        .channel {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.2s;
+            min-height: 400px;
+        }
+
+        .channel:hover {
+            border-color: #3f3f46;
+        }
+
+        .channel-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .channel-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fafafa;
+            margin-bottom: 4px;
+        }
+
+        .channel-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3f3f46 0%, #27272a 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px auto;
+            font-size: 20px;
+        }
+
+        .faders-container {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+            align-items: flex-end;
+            width: 100%;
+            justify-content: center;
+            padding: 16px 0;
+        }
+
+        .fader-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fader-label {
+            font-size: 11px;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            writing-mode: horizontal-tb;
+        }
+
+        .fader-wrapper {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .fader-track {
+            width: 4px;
+            height: 200px;
+            background: #27272a;
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .fader-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 2px;
+            transition: height 0.1s;
+        }
+
+        .fader-thumb {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #fafafa;
+            border: 2px solid #3b82f6;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: grab;
+            transition: transform 0.1s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .fader-thumb:active {
+            cursor: grabbing;
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .fader-value {
+            font-size: 12px;
+            color: #a1a1aa;
+            margin-top: 4px;
+            min-width: 35px;
+            text-align: center;
+        }
+
+        .vu-meter {
+            width: 100%;
+            height: 4px;
+            background: #27272a;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .vu-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e 0%, #eab308 70%, #ef4444 90%);
+            width: 0%;
+            transition: width 0.05s;
+            border-radius: 2px;
+        }
+
+        .mute-btn {
+            width: 100%;
+            padding: 10px;
+            background: #27272a;
+            border: 1px solid #3f3f46;
+            border-radius: 8px;
+            color: #e4e4e7;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .mute-btn:hover {
+            background: #3f3f46;
+        }
+
+        .mute-btn.muted {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: #fafafa;
+        }
+
+        .mute-btn.muted:hover {
+            background: #b91c1c;
+            border-color: #b91c1c;
+        }
+
+        .status-bar {
+            background: #18181b;
+            border-top: 1px solid #27272a;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #71717a;
+        }
+
+        .footer {
+            background: #0f0f11;
+            border-top: 1px solid #27272a;
+            padding: 16px 24px;
+            text-align: center;
+            font-size: 12px;
+            color: #71717a;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: 14px;
+            color: #71717a;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #27272a;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #18181b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525b;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        Loading Wave Reborn...
+    </div>
+
+    <div id="app" style="display: none; height: 100vh; display: flex; flex-direction: column;">
+        <div class="header">
+            <h1>
+                <div class="logo">W</div>
+                Wave Reborn
+            </h1>
+            <a href="settings.html" class="settings-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 10a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M14 8a6 6 0 11-12 0 6 6 0 0112 0z" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+                Settings
+            </a>
+        </div>
+
+        <div class="main-content">
+            <div class="mixer-section">
+                <div class="section-title">Audio Mixer</div>
+                <div id="channels" class="channels-grid"></div>
+            </div>
+
+            <div class="apps-section">
+                <div class="section-title">Application Routing</div>
+                <button class="refresh-apps-btn" onclick="loadApplications()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M13 3L3 3C1.89543 3 1 3.89543 1 5L1 11C1 12.1046 1.89543 13 3 13L13 13C14.1046 13 15 12.1046 15 11L15 5C15 3.89543 14.1046 3 13 3Z" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M8 8L8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Refresh Applications
+                </button>
+                <div id="applications" class="apps-list"></div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-indicator">
+                <div class="status-dot"></div>
+                Connected
+            </div>
+            <div id="channel-count">0 channels</div>
+        </div>
+
+        <div class="footer">
+            Made by <a href="https://github.com/Lukuoris" target="_blank" rel="noopener noreferrer">Lukuoris</a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.port === '8080' ? 'http://127.0.0.1:8000' : '';
+        let ws = null;
+        let channelsData = [];
+
+        // Channel icons mapping
+        const channelIcons = {
+            'Music': '🎵',
+            'Game': '🎮',
+            'Voice': '🎤',
+            'System': '🖥️',
+            'Browser': '🌐',
+            'Chat': '💬',
+            'default': '🔊'
+        };
+
+        function getChannelIcon(name) {
+            return channelIcons[name] || channelIcons.default;
+        }
+
+        function createFader(channel, type, value) {
+            const faderGroup = document.createElement('div');
+            faderGroup.className = 'fader-group';
+
+            const label = type === 'headphones' ? 'Monitor' : 'Stream';
+
+            faderGroup.innerHTML = `
+                <div class="fader-label">${label}</div>
+                <div class="fader-wrapper">
+                    <div class="fader-track" data-channel="${channel}" data-type="${type}">
+                        <div class="fader-fill" style="height: ${value}%"></div>
+                        <div class="fader-thumb" style="bottom: calc(${value}% - 10px)"></div>
+                    </div>
+                </div>
+                <div class="fader-value">${Math.round(value)}%</div>
+            `;
+
+            const track = faderGroup.querySelector('.fader-track');
+            const thumb = faderGroup.querySelector('.fader-thumb');
+            const fill = faderGroup.querySelector('.fader-fill');
+            const valueDisplay = faderGroup.querySelector('.fader-value');
+
+            let isDragging = false;
+
+            function updateFader(clientY) {
+                const rect = track.getBoundingClientRect();
+                let percentage = 100 - ((clientY - rect.top) / rect.height * 100);
+                percentage = Math.max(0, Math.min(100, percentage));
+
+                fill.style.height = percentage + '%';
+                thumb.style.bottom = `calc(${percentage}% - 10px)`;
+                valueDisplay.textContent = Math.round(percentage) + '%';
+
+                // Update backend
+                const endpoint = type === 'headphones' ? 'set_volume_you' : 'set_volume_stream';
+                const url = `${API_BASE}/${endpoint}?channel=${encodeURIComponent(channel)}&value=${Math.round(percentage)}`;
+
+                fetch(url, {
+                    method: 'POST'
+                }).catch(err => console.error(`Error updating ${type} volume for ${channel}:`, err));
+            }
+
+            function startDrag(e) {
+                isDragging = true;
+                e.preventDefault();
+                e.stopPropagation();
+                updateFader(e.clientY || e.touches[0].clientY);
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                updateFader(e.clientY || e.touches[0].clientY);
+            }
+
+            function stopDrag() {
+                isDragging = false;
+            }
+
+            // Обработчики для thumb
+            thumb.addEventListener('mousedown', startDrag);
+            thumb.addEventListener('touchstart', startDrag, { passive: false });
+
+            // Обработчики для track
+            track.addEventListener('mousedown', (e) => {
+                if (e.target === track || e.target === fill) {
+                    startDrag(e);
+                }
+            });
+            track.addEventListener('touchstart', (e) => {
+                if (e.target === track || e.target === fill) {
+                    startDrag(e);
+                }
+            }, { passive: false });
+
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchend', stopDrag);
+
+            return faderGroup;
+        }
+
+        async function loadChannels() {
+            try {
+                const res = await fetch(`${API_BASE}/channels`);
+                channelsData = await res.json();
+
+                const container = document.getElementById('channels');
+                container.innerHTML = '';
+
+                for (let ch of channelsData) {
+                    const channelDiv = document.createElement('div');
+                    channelDiv.className = 'channel';
+                    channelDiv.id = `channel-${ch.name}`;
+
+                    const header = document.createElement('div');
+                    header.className = 'channel-header';
+                    header.innerHTML = `
+                        <div class="channel-icon">${getChannelIcon(ch.name)}</div>
+                        <div class="channel-name">${ch.name}</div>
+                    `;
+                    channelDiv.appendChild(header);
+
+                    const vuMeter = document.createElement('div');
+                    vuMeter.className = 'vu-meter';
+                    vuMeter.innerHTML = `<div class="vu-fill" id="vu-${ch.name}"></div>`;
+                    channelDiv.appendChild(vuMeter);
+
+                    const fadersContainer = document.createElement('div');
+                    fadersContainer.className = 'faders-container';
+                    fadersContainer.appendChild(createFader(ch.name, 'headphones', ch.volume_you || 100));
+                    fadersContainer.appendChild(createFader(ch.name, 'stream', ch.volume_stream || 100));
+                    channelDiv.appendChild(fadersContainer);
+
+                    const muteBtn = document.createElement('button');
+                    muteBtn.className = 'mute-btn';
+                    muteBtn.id = `mute-${ch.name}`;
+                    muteBtn.textContent = ch.mute ? 'Unmute' : 'Mute';
+                    if (ch.mute) muteBtn.classList.add('muted');
+
+                    muteBtn.onclick = async () => {
+                        const endpoint = ch.mute ? 'unmute' : 'mute';
+                        await fetch(`${API_BASE}/${endpoint}?channel=${ch.name}`, { method: 'POST' });
+                        ch.mute = !ch.mute;
+                        muteBtn.textContent = ch.mute ? 'Unmute' : 'Mute';
+                        muteBtn.classList.toggle('muted', ch.mute);
+                    };
+
+                    channelDiv.appendChild(muteBtn);
+                    container.appendChild(channelDiv);
+                }
+
+                document.getElementById('channel-count').textContent = `${channelsData.length} channel${channelsData.length !== 1 ? 's' : ''}`;
+
+                // Hide loading, show app
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('app').style.display = 'flex';
+
+            } catch (error) {
+                console.error('Error loading channels:', error);
+                setTimeout(loadChannels, 3000);
+            }
+        }
+
+        function connectWebSocket() {
+            const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsHost = window.location.port === '8080' ? '127.0.0.1:8000' : window.location.host;
+
+            ws = new WebSocket(`${wsProtocol}//${wsHost}/vu`);
+
+            ws.onmessage = (e) => {
+                const levels = JSON.parse(e.data);
+                for (let ch in levels) {
+                    const vuFill = document.getElementById(`vu-${ch}`);
+                    if (vuFill) {
+                        const level = Math.min(100, levels[ch] * 100);
+                        vuFill.style.width = level + '%';
+                    }
+                }
+            };
+
+            ws.onclose = () => {
+                console.log('WebSocket closed, reconnecting...');
+                setTimeout(connectWebSocket, 3000);
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+        }
+
+        async function loadApplications() {
+            try {
+                const res = await fetch(`${API_BASE}/applications`);
+                const apps = await res.json();
+
+                const container = document.getElementById('applications');
+                container.innerHTML = '';
+
+                if (apps.length === 0) {
+                    container.innerHTML = '<div style="color: #71717a; padding: 20px; text-align: center;">No audio applications detected</div>';
+                    return;
+                }
+
+                for (let app of apps) {
+                    const appDiv = document.createElement('div');
+                    appDiv.className = 'app-item';
+
+                    // Определяем иконку по имени приложения
+                    let icon = '🔊';
+                    const appName = app.name.toLowerCase();
+                    if (appName.includes('firefox') || appName.includes('chrome') || appName.includes('browser')) {
+                        icon = '🌐';
+                    } else if (appName.includes('discord') || appName.includes('teamspeak') || appName.includes('mumble')) {
+                        icon = '💬';
+                    } else if (appName.includes('spotify') || appName.includes('music') || appName.includes('vlc')) {
+                        icon = '🎵';
+                    } else if (appName.includes('game') || appName.includes('steam')) {
+                        icon = '🎮';
+                    }
+
+                    appDiv.innerHTML = `
+                        <div class="app-icon">${icon}</div>
+                        <div class="app-info">
+                            <div class="app-name">${app.name}</div>
+                            <div class="app-details">Index: ${app.index} | Current: ${app.current_channel || 'None'}</div>
+                        </div>
+                        <select class="app-route-select" data-app-index="${app.index}">
+                            <option value="">-- Select Channel --</option>
+                            ${channelsData.map(ch =>
+                                `<option value="${ch.name}" ${app.current_channel === ch.name ? 'selected' : ''}>${ch.name}</option>`
+                            ).join('')}
+                        </select>
+                    `;
+
+                    const select = appDiv.querySelector('.app-route-select');
+                    select.addEventListener('change', async (e) => {
+                        const channel = e.target.value;
+                        const appIndex = e.target.dataset.appIndex;
+
+                        if (channel) {
+                            try {
+                                const res = await fetch(`${API_BASE}/route_application?app_index=${appIndex}&channel=${channel}`, {
+                                    method: 'POST'
+                                });
+
+                                if (res.ok) {
+                                    // Обновляем отображение
+                                    const detailsDiv = appDiv.querySelector('.app-details');
+                                    detailsDiv.textContent = `Index: ${appIndex} | Current: ${channel}`;
+                                } else {
+                                    alert('Failed to route application');
+                                }
+                            } catch (error) {
+                                console.error('Error routing application:', error);
+                                alert('Error routing application');
+                            }
+                        }
+                    });
+
+                    container.appendChild(appDiv);
+                }
+
+            } catch (error) {
+                console.error('Error loading applications:', error);
+                document.getElementById('applications').innerHTML =
+                    '<div style="color: #ef4444; padding: 20px; text-align: center;">Error loading applications</div>';
+            }
+        }
+
+        // Initialize
+        loadChannels().then(() => {
+            // Загружаем приложения после загрузки каналов
+            loadApplications();
+        });
+        connectWebSocket();
+
+        // Refresh channels and applications periodically
+        setInterval(() => {
+            loadChannels();
+            loadApplications();
+        }, 30000);
+    </script>
+</body>
+</html>
