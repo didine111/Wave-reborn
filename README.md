@@ -61,7 +61,7 @@
 
 ### Prerequisites
 
-- **Linux** with PulseAudio (most distributions)
+- **Linux** Linux with PulseAudio or PipeWire (with pipewire-pulse)
 - **Python 3.7+**
 - **PulseAudio** daemon running
 
